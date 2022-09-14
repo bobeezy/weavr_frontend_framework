@@ -18,6 +18,6 @@ workflows:
           post-steps:
             - run: ls
             - store_test_results:
-                path: cypress/results
+                path: cypress/reports/tests
             - store_artifacts:
                 path: cypress/screenshots
