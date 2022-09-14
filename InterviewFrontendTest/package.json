@@ -1,0 +1,24 @@
+{
+  "name": "interview_frontend_test",
+  "version": "1.0.0",
+  "description": "## UI assessment with Cypress and JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cy:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cy:run": "cypress run",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bobeezy/weavr_frontend_framework.git"
+  },
+  "keywords": [],
+  "author": "lionel Mangoua",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^10.7.0",
+    "cypress-mochawesome-reporter": "^3.2.2"
+  }
+}
