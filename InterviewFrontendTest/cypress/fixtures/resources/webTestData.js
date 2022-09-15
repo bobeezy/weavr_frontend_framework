@@ -10,7 +10,6 @@ export const problemUser = 'problem_user';
 export const performanceGlitchUser = 'performance_glitch_user';
 export const listOfAcceptedUsers = 'Accepted usernames are:standard_userlocked_out_userproblem_userperformance_glitch_user';
 export const secretSauce = 'secret_sauce';
-
 export const userName = 'standard_user';
 export const userPassword = 'secret_sauce';
 export const invalidUsername = 'locked_out_user';
