@@ -63,15 +63,15 @@ jobs:
       - checkout
       - run:
           name: Running E2E tests
-          command: cypress run
-      - store_artifacts:
-          path: cypress/videos
+          command: npx cypress run
+#       - store_artifacts:
+#           path: cypress/videos
 #       - store_artifacts:
 #           path: cypress/screenshots
-      - store_artifacts:
-          path: mochareports
-      - store_test_results:
-          path: cypress/results
+#       - store_artifacts:
+#           path: mochareports
+#       - store_test_results:
+#           path: cypress/results
 #     steps:
 #       - checkout
 #       - restore_cache:
