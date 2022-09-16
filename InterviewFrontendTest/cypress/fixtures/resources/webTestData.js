@@ -22,3 +22,15 @@ export const errMessageUnmatchingCredentials = 'Epic sadface: Username and passw
 
 //home page
 export const products = 'Products';
+
+//cart page
+export const yourCart = 'Your Cart';
+export const itemName = 'Sauce Labs Backpack';
+
+//checkout page
+export const firstName = 'Test';
+export const lastName = 'Automation';
+export const postalCode = '77123';
+export const checkoutOverview = 'Checkout: Overview';
+export const checkoutComplete = 'Checkout: Complete';
+export const thankYou = 'THANK YOU FOR YOUR ORDER';

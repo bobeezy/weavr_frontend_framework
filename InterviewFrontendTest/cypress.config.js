@@ -20,7 +20,7 @@ module.exports = defineConfig({
       // return require('./cypress/plugins/index.js')(on, config)
     },
     specPattern: 'cypress/e2e/specs/web/*.js',
-    baseUrl: 'https://www.saucedemo.com/',
+    baseUrl: 'https://www.saucedemo.com',
     screenshotsFolder: 'cypress/screenshots',
     // Command timeout overridden for E2E tests
     pageLoadTimeout: 40000

@@ -1,7 +1,10 @@
 /// <reference types="cypress" />
 
-import { usernameTextbox, passwordTextbox, loginButton, loginErrorMessage } from "../fixtures/resources/login.page";
+import { yourCart, checkoutOverview, checkoutComplete, thankYou } from "../fixtures/resources/webTestData";
+import { usernameTextbox, passwordTextbox, loginButton, loginErrorMessage, addToCartButton, cartButton } from "../fixtures/resources/login.page";
 import { productsTitle, cartIcon } from "../fixtures/resources/home.page";
+import { cartItem, checkoutButton, yourCartTitle } from "../fixtures/resources/cart.page";
+import { fNameTextbox, lNameTextbox, zipCodeTextbox, continueButton, checkoutOverviewTitle, checkoutCompleteTitle, finishButton, thankYouMessage, backHomeButton } from "../fixtures/resources/checkout.page";
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -44,7 +47,7 @@ Cypress.Commands.add('login', (username, password) => {
 Cypress.Commands.add('validateSuccessfulSignIn', (url, title, usrn) => { 
     if(usrn.toLowerCase() === 'performance_glitch_user') { //This user has high loading times. Does the site still work as expected?
         //validate user has high loading times
-        cy.log("performance_glitch_user scenario"); //TODO delete later
+        cy.log("performance_glitch_user scenario");
         var start = 0;
         cy.then(() => {
             start = performance.now();
@@ -56,7 +59,7 @@ Cypress.Commands.add('validateSuccessfulSignIn', (url, title, usrn) => {
     }
     else if (usrn.toLowerCase() === 'problem_user') { //Images are not loading for this user.
         //validate images are not loading
-        cy.log("problem_user scenario"); //TODO delete later
+        cy.log("problem_user scenario");
         cy.get('a').find('img').should('have.attr', 'src').should('include','/static/media/sl-404.168b1cce');
     }
     else {
@@ -97,4 +100,60 @@ Cypress.Commands.add('validateUnsuccessfulSignIn', (url, usrn, pwd, errMessage) 
         //validate error message
         cy.get(loginErrorMessage).should('include.text', errMessage);
     }
+})
+
+Cypress.Commands.add('addItemToCart', (item) => { 
+    //select item 'Backpack'
+    cy.get(addToCartButton).click();
+
+    //click cart icon
+    cy.get(cartButton).click();
+   
+    //validate Cart page
+    cy.get(yourCartTitle).should('include.text', yourCart);
+
+    //validate item name
+    cy.get(cartItem).should('include.text', item);
+
+    //click 'Checkout' button
+    cy.get(checkoutButton).click();
+})
+
+Cypress.Commands.add('checkoutYourInformation', (fName, lName, zipCode) => { 
+    //enter 'first name'
+    cy.get(fNameTextbox).clear().type(fName);
+
+    //enter 'last name'
+    cy.get(lNameTextbox).clear().type(lName);
+
+    //enter 'zip code'
+    cy.get(zipCodeTextbox).clear().type(zipCode);
+
+    //click 'continue' button'
+    cy.get(continueButton).click();
+   
+    //validate 'checkout overview' page
+    cy.get(checkoutOverviewTitle).should('include.text', checkoutOverview);
+})
+
+Cypress.Commands.add('checkoutOverview', (item) => { 
+    //validate 'checkout overview' page
+    cy.get(checkoutOverviewTitle).should('include.text', checkoutOverview);
+
+    //validate item name
+    cy.get(cartItem).should('include.text', item);
+
+    //click 'finish' button'
+    cy.get(finishButton).click();
+})
+
+Cypress.Commands.add('checkoutComplete', () => { 
+    //validate 'checkout complete' page
+    cy.get(checkoutCompleteTitle).should('include.text', checkoutComplete);
+
+    //validate 'Thank you for your order' message'
+    cy.get(thankYouMessage).should('include.text', thankYou);
+
+    //click 'logout' side bar 
+    cy.get(backHomeButton).click();
 })
