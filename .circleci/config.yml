@@ -312,6 +312,27 @@
 
 
 
+# # # Almost work fine
+# version: 2
+
+# jobs:
+#   build:
+#     docker:
+#       # the Docker image with Cypress dependencies
+#       - image: cypress/base:8
+#         environment:
+#           ## this enables colors in the output 
+#           TERM: xterm
+# #     working_directory: ~/app
+#     working_directory: ~/project/InterviewFrontendTest
+#     parallelism: 1
+#     steps:
+#       - checkout
+#       - run:
+#           name: Running E2E tests
+#           command: npx cypress run
+
+
 # # Almost work fine
 version: 2
 
@@ -328,6 +349,15 @@ jobs:
     parallelism: 1
     steps:
       - checkout
+      # Install the latest npm - the node Orb takes care of it
+      - node/install-npm
+      - node/install-packages:
+          app-dir: ~/project/InterviewFrontendTest
+          cache-version: v1
+          cache-path: node_modules
       - run:
           name: Running E2E tests
-          command: npx cypress run
+#           command: npx cypress run
+          app-dir: ~/project/backend
+          cache-version: v1
+          command: npm run build
