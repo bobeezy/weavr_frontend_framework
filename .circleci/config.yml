@@ -1,102 +1,102 @@
-# version: 2.1
-# orbs:
-#   cypress: cypress-io/cypress@1.7.0
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.7.0
 
-# workflows:
-#   build:
-#     jobs:
-#       - cypress/run:
-#           post-steps:
-#             - run: 
-#                 when: always
-#                 name: Merge MochaAwesome Reports
-#                 command: npx mochawesome-merge --reportDir cypress/reports/mocha > mochareports/report.json 
-#             - run: 
-#                 when: always
-#                 name: Create mochawesome html report
-#                 command: npx marge mochareports/*.json -f report -o mochareports
-#             - store_artifacts:
-#                 path: mochareports
-#             - store_test_results:
-#                 path: cypress/reports/tests
-          
-#   nightly:
-#     triggers: #use the triggers key to indicate a scheduled build
-#       - schedule:
-#           cron: "0 0 * * *" # use cron syntax to set the schedule
-#           filters:
-#             branches:
-#               only:
-#                 - add-cypress
-#     jobs:
-#       - cypress/run:
-#           post-steps:
-#             - run: 
-#                 when: always
-#                 name: Merge MochaAwesome Reports
-#                 command: npx mochawesome-merge --reportDir cypress/reports/mocha > mochareports/report.json 
-#             - run: 
-#                 when: always
-#                 name: Create mochawesome html report
-#                 command: npx marge mochareports/*.json -f report -o mochareports
-#             - store_artifacts:
-#                 path: mochareports
-#             - store_test_results:
-#                 path: cypress/reports/tests
-
-
-
-
-version: 2
-
-jobs:
+workflows:
   build:
-    docker:
-      # the Docker image with Cypress dependencies
-      - image: cypress/base:8
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
-    working_directory: ~/app
-    parallelism: 1
-    steps:
-      - checkout
-      - run:
-          name: Running E2E tests
-          command: cypress run
-      - store_artifacts:
-          path: cypress/videos
-      - store_artifacts:
-          path: cypress/screenshots
-      - store_artifacts:
-          path: mochareports
-      - store_test_results:
-          path: cypress/reports/tests
+    jobs:
+      - cypress/run:
+          post-steps:
+            - run: 
+                when: always
+                name: Merge MochaAwesome Reports
+                command: npx mochawesome-merge --reportDir cypress/reports/mocha > mochareports/report.json 
+            - run: 
+                when: always
+                name: Create mochawesome html report
+                command: npx marge mochareports/*.json -f report -o mochareports
+            - store_artifacts:
+                path: mochareports
+            - store_test_results:
+                path: cypress/reports/tests
+          
+  nightly:
+    triggers: #use the triggers key to indicate a scheduled build
+      - schedule:
+          cron: "0 0 * * *" # use cron syntax to set the schedule
+          filters:
+            branches:
+              only:
+                - add-cypress
+    jobs:
+      - cypress/run:
+          post-steps:
+            - run: 
+                when: always
+                name: Merge MochaAwesome Reports
+                command: npx mochawesome-merge --reportDir cypress/reports/mocha > mochareports/report.json 
+            - run: 
+                when: always
+                name: Create mochawesome html report
+                command: npx marge mochareports/*.json -f report -o mochareports
+            - store_artifacts:
+                path: mochareports
+            - store_test_results:
+                path: cypress/reports/tests
+
+
+
+
+# version: 2
+
+# jobs:
+#   build:
+#     docker:
+#       # the Docker image with Cypress dependencies
+#       - image: cypress/base:8
+#         environment:
+#           ## this enables colors in the output
+#           TERM: xterm
+#     working_directory: ~/app
+#     parallelism: 1
 #     steps:
 #       - checkout
-#       - restore_cache:
-#           keys:
-#             - v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
-#             - v2-deps-{{ .Branch }}-
-#             - v2-deps-
-#       - run: npm ci
-#       - save_cache:
-#           key: v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
-#           paths:
-#             - ~/.npm
-#             - ~/.cache
 #       - run:
-#           name: Running E2E tests with JUnit reporter
-#           command: npm run test-junit
-#       - store_test_results:
-#           path: junit-results
-#       - run:
-#           name: Running E2E tests with multiple reporters
-#           command: npm run test-multiple
-#       - store_test_results:
-#           path: multiple-results
+#           name: Running E2E tests
+#           command: cypress run
 #       - store_artifacts:
 #           path: cypress/videos
 #       - store_artifacts:
 #           path: cypress/screenshots
+#       - store_artifacts:
+#           path: mochareports
+#       - store_test_results:
+#           path: cypress/reports/tests
+# #     steps:
+# #       - checkout
+# #       - restore_cache:
+# #           keys:
+# #             - v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+# #             - v2-deps-{{ .Branch }}-
+# #             - v2-deps-
+# #       - run: npm ci
+# #       - save_cache:
+# #           key: v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+# #           paths:
+# #             - ~/.npm
+# #             - ~/.cache
+# #       - run:
+# #           name: Running E2E tests with JUnit reporter
+# #           command: npm run test-junit
+# #       - store_test_results:
+# #           path: junit-results
+# #       - run:
+# #           name: Running E2E tests with multiple reporters
+# #           command: npm run test-multiple
+# #       - store_test_results:
+# #           path: multiple-results
+# #       - store_artifacts:
+# #           path: cypress/videos
+# #       - store_artifacts:
+# #           path: cypress/screenshots
          
