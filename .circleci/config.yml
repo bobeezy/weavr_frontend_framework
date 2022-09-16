@@ -350,11 +350,11 @@ jobs:
     steps:
       - checkout
       # Install the latest npm - the node Orb takes care of it
-      - node/install-npm
-      - node/install-packages:
-          app-dir: ~/project/InterviewFrontendTest
-          cache-version: v1
-          cache-path: node_modules
+#       - node/install-npm
+#       - node/install-packages:
+#           app-dir: ~/project/InterviewFrontendTest
+#           cache-version: v1
+#           cache-path: node_modules
       - run:
           name: Running E2E tests
 #           command: npx cypress run
