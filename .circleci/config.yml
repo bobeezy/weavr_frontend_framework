@@ -131,57 +131,57 @@
 #             - store_artifacts:
 #                 path: cypress/screenshots
 
-# version: 2
-
-# jobs:
-#   build:
-#     docker:
-#       # the Docker image with Cypress dependencies
-#       - image: cypress/base:8
-#         environment:
-#           ## this enables colors in the output
-#           TERM: xterm
-#     working_directory: ~/InterviewFrontendTest
-#     parallelism: 1
-#     steps:
-#       - checkout
-#       - run:
-#           name: Running E2E tests
-#           command: npx cypress run
-
-
-
-
 version: 2
+
 jobs:
   build:
     docker:
-      - image: cypress/base:12
+      # the Docker image with Cypress dependencies
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
     working_directory: ~/InterviewFrontendTest
+    parallelism: 1
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - dependencies-
       - run:
-          name: Install dependencies
-          # https://docs.npmjs.com/cli/ci
-          command: npm ci
-      - save_cache:
-          paths:
-            - ~/.npm
-            - ~/.cache
-          key: dependencies-{{ checksum "package.json" }}
-      # continued: start the app and run the tests
-         # two commands: start server, run tests
-      - run:
-          name: Start TodoMVC server
-          command: npm start
-          working_directory: todomvc
-          background: true
-      - run:
-          name: Run Cypress tests
+          name: Running E2E tests
           command: npx cypress run
+
+
+
+
+# version: 2
+# jobs:
+#   build:
+#     docker:
+#       - image: cypress/base:12
+#     working_directory: ~/InterviewFrontendTest
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           keys:
+#             - dependencies-{{ checksum "package.json" }}
+#             # fallback to using the latest cache if no exact match is found
+#             - dependencies-
+#       - run:
+#           name: Install dependencies
+#           # https://docs.npmjs.com/cli/ci
+#           command: npm ci
+#       - save_cache:
+#           paths:
+#             - ~/.npm
+#             - ~/.cache
+#           key: dependencies-{{ checksum "package.json" }}
+#       # continued: start the app and run the tests
+#          # two commands: start server, run tests
+#       - run:
+#           name: Start TodoMVC server
+#           command: npm start
+#           working_directory: todomvc
+#           background: true
+#       - run:
+#           name: Run Cypress tests
+#           command: npx cypress run
          
