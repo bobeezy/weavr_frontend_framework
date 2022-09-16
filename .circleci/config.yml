@@ -1,23 +1,54 @@
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
-executors:
-  with-chrome:
-    resource_class: small
-    docker:
-      - image: "cypress/browsers:node14.16.0-chrome90-ff88"
+  cypress: cypress-io/cypress@1.7.0
+
 workflows:
   build:
     jobs:
-      - cypress/install
       - cypress/run:
-          requires:
-            - cypress/install
-          executor: with-chrome
-          browser: chrome
           post-steps:
-            - run: ls
+            - run: 
+                when: always
+                name: Merge MochaAwesome Reports
+                command: npx mochawesome-merge --reportDir cypress/reports/mocha > mochareports/report.json 
+            - run: 
+                when: always
+                name: Create mochawesome html report
+                command: npx marge mochareports/*.json -f report -o mochareports
+            - run:
+                when: always
+                name: Slack report
+                command: npx cypress-slack-reporter --verbose
+            - store_artifacts:
+                path: mochareports
+            - store_test_results:
+                path: cypress/reports
+          
+  nightly:
+    triggers: #use the triggers key to indicate a scheduled build
+      - schedule:
+          cron: "0 0 * * *" # use cron syntax to set the schedule
+          filters:
+            branches:
+              only:
+                - add-cypress
+    jobs:
+      - cypress/run:
+          post-steps:
+            - run: 
+                when: always
+                name: Merge MochaAwesome Reports
+                command: npx mochawesome-merge --reportDir cypress/reports/mocha > mochareports/report.json 
+            - run: 
+                when: always
+                name: Create mochawesome html report
+                command: npx marge mochareports/*.json -f report -o mochareports
+            - run:
+                when: always
+                name: Slack report
+                command: npx cypress-slack-reporter --verbose
+            - store_artifacts:
+                path: mochareports
             - store_test_results:
                 path: cypress/reports/tests
-            - store_artifacts:
-                path: cypress/screenshots
+         
