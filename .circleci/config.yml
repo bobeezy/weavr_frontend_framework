@@ -131,23 +131,23 @@
 #             - store_artifacts:
 #                 path: cypress/screenshots
 
-version: 2
+# version: 2
 
-jobs:
-  build:
-    docker:
-      # the Docker image with Cypress dependencies
-      - image: cypress/base:8
-        environment:
-          ## this enables colors in the output
-          TERM: xterm
-    working_directory: ~/InterviewFrontendTest
-    parallelism: 1
-    steps:
-      - checkout
-      - run:
-          name: Running E2E tests
-          command: npx cypress run
+# jobs:
+#   build:
+#     docker:
+#       # the Docker image with Cypress dependencies
+#       - image: cypress/base:8
+#         environment:
+#           ## this enables colors in the output
+#           TERM: xterm
+#     working_directory: ~/InterviewFrontendTest
+#     parallelism: 1
+#     steps:
+#       - checkout
+#       - run:
+#           name: Running E2E tests
+#           command: npx cypress run
 
 
 
@@ -184,4 +184,18 @@ jobs:
 #       - run:
 #           name: Run Cypress tests
 #           command: npx cypress run
+
+
+
+version: 2.1
+orbs:
+  # "cypress-io/cypress@1" installs the latest published
+  # version "1.x.y" of the orb. We recommend you then use
+  # the strict explicit version "cypress-io/cypress@1.x.y"
+  # to lock the version and prevent unexpected CI changes
+  cypress: cypress-io/cypress@1
+workflows:
+  build:
+    jobs:
+      - cypress/run # "run" job comes from "cypress" orb
          
