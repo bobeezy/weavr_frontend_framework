@@ -141,7 +141,7 @@
 #         environment:
 #           ## this enables colors in the output
 #           TERM: xterm
-#     working_directory: ~/app
+#     working_directory: ~/InterviewFrontendTest
 #     parallelism: 1
 #     steps:
 #       - checkout
@@ -157,7 +157,7 @@ jobs:
   build:
     docker:
       - image: cypress/base:12
-    working_directory: ~/repo
+    working_directory: ~/InterviewFrontendTest
     steps:
       - checkout
       - restore_cache:
