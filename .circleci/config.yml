@@ -391,8 +391,10 @@ workflows:
   example-workflow:
     jobs:
       - cypress/install:
-           build: "npm run build"
+           install-command: npm install
       - cypress/run:
+            requires:
+              - cypress/install
            record: true
            parallel: true
            parallelism: 2
