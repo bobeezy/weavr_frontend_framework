@@ -133,24 +133,24 @@
 
 
 # # Almost work fine
-# version: 2
+version: 2
 
-# jobs:
-#   build:
-#     docker:
-#       # the Docker image with Cypress dependencies
-#       - image: cypress/base:8
-#         environment:
-#           ## this enables colors in the output 
-#           TERM: xterm
-#     working_directory: ~/app
-# #     working_directory: ~/InterviewFrontendTest
-#     parallelism: 1
-#     steps:
-#       - checkout
-#       - run:
-#           name: Running E2E tests
-#           command: npx cypress run
+jobs:
+  build:
+    docker:
+      # the Docker image with Cypress dependencies
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output 
+          TERM: xterm
+    working_directory: ~/app
+#     working_directory: ~/InterviewFrontendTest
+    parallelism: 1
+    steps:
+      - checkout
+      - run:
+          name: Running E2E tests
+          command: npx cypress run
 
 
 
@@ -301,11 +301,11 @@
 
 
 
-version: 2.1
-orbs:
-  cypress: cypress-io/cypress@2.2.0
+# version: 2.1
+# orbs:
+#   cypress: cypress-io/cypress@2.2.0
   
-workflows:
-    example-workflow:
-      jobs:
-        - cypress/run
+# workflows:
+#     example-workflow:
+#       jobs:
+#         - cypress/run
