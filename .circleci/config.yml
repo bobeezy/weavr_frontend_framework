@@ -372,8 +372,8 @@ workflows:
       jobs:
         - cypress/install:
             install-command: npm install
-        - cypress/install:
-            install-command: yarn install --frozen-lockfile 
+#         - cypress/install:
+#             install-command: yarn install --frozen-lockfile 
         - cypress/run:
             requires:
               - cypress/install
