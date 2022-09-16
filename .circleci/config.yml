@@ -333,31 +333,47 @@
 #           command: npx cypress run
 
 
-# # Almost work fine
-version: 2
+# # # Almost work fine
+# version: 2
 
-jobs:
-  build:
-    docker:
-      # the Docker image with Cypress dependencies
-      - image: cypress/base:8
-        environment:
-          ## this enables colors in the output 
-          TERM: xterm
-#     working_directory: ~/app
-    working_directory: /InterviewFrontendTest
-    parallelism: 1
-    steps:
-      - checkout
-      # Install the latest npm - the node Orb takes care of it
-#       - node/install-npm
-#       - node/install-packages:
-#           app-dir: ~/project/InterviewFrontendTest
+# jobs:
+#   build:
+#     docker:
+#       # the Docker image with Cypress dependencies
+#       - image: cypress/base:8
+#         environment:
+#           ## this enables colors in the output 
+#           TERM: xterm
+# #     working_directory: ~/app
+#     working_directory: /InterviewFrontendTest
+#     parallelism: 1
+#     steps:
+#       - checkout
+#       # Install the latest npm - the node Orb takes care of it
+# #       - node/install-npm
+# #       - node/install-packages:
+# #           app-dir: ~/project/InterviewFrontendTest
+# #           cache-version: v1
+# #           cache-path: node_modules
+#       - run:
+#           name: Running E2E tests
+#           app-dir: /InterviewFrontendTest
 #           cache-version: v1
-#           cache-path: node_modules
-      - run:
-          name: Running E2E tests
-          app-dir: /InterviewFrontendTest
-          cache-version: v1
-          command: npx cypress run
-#           command: npm run build
+#           command: npx cypress run
+# #           command: npm run build
+
+
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@2.2.0
+  
+workflows:
+    example-workflow:
+      jobs:
+        - cypress/install
+        - cypress/run:
+            requires:
+              - cypress/install
+            record: true
+            parallel: true
+            parallelism: 1
