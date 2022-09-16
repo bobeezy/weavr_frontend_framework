@@ -388,8 +388,11 @@ version: 2.1
 orbs:
   cypress: cypress-io/cypress@1.0.0
 workflows:
-  build:
+  example-workflow:
     jobs:
-      - cypress/run:
+      - cypress/install:
            build: "npm run build"
+      - cypress/run:
            record: true
+           parallel: true
+           parallelism: 2
