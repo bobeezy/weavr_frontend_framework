@@ -131,24 +131,26 @@
 #             - store_artifacts:
 #                 path: cypress/screenshots
 
-version: 2
 
-jobs:
-  build:
-    docker:
-      # the Docker image with Cypress dependencies
-      - image: cypress/base:8
-        environment:
-          ## this enables colors in the output 
-          TERM: xterm
-    working_directory: ~/app
-#     working_directory: ~/InterviewFrontendTest
-    parallelism: 1
-    steps:
-      - checkout
-      - run:
-          name: Running E2E tests
-          command: npx cypress run
+# # Almost work fine
+# version: 2
+
+# jobs:
+#   build:
+#     docker:
+#       # the Docker image with Cypress dependencies
+#       - image: cypress/base:8
+#         environment:
+#           ## this enables colors in the output 
+#           TERM: xterm
+#     working_directory: ~/app
+# #     working_directory: ~/InterviewFrontendTest
+#     parallelism: 1
+#     steps:
+#       - checkout
+#       - run:
+#           name: Running E2E tests
+#           command: npx cypress run
 
 
 
@@ -199,4 +201,42 @@ jobs:
 #   build:
 #     jobs:
 #       - cypress/run # "run" job comes from "cypress" orb
-         
+
+
+
+version: 2
+jobs:
+  test:
+#   build:
+    docker:
+      - image: cypress/base:14.16.0
+    steps:
+      - checkout
+      # restore folders with npm dependencies and cypress binary
+      - restore_cache:
+          keys:
+            - cache-{{ checksum "package.json" }}
+      # install npm dependencies & cypress binary
+      # if they were cached, this step is super quick
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - run: npm run cy:verify
+      # save npm dependencies & cypress binary for future runs
+      - save_cache:
+          key: cache-{{ checksum "package.json" }}
+          # cache NPM modules and the folder with the Cypress binary
+          paths:
+            - ~/.npm
+            - ~/.cache
+      # start server before starting tests
+      - run:
+          command: npm start
+          background: true
+      - run: npm run e2e:record
+      
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test
