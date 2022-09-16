@@ -148,7 +148,8 @@ jobs:
       - checkout
       - run:
           name: Running E2E tests
-          command: npx cypress run
+          command: cypress run
+#           command: npx cypress run
 
 
 
