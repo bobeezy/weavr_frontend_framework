@@ -15,14 +15,10 @@ workflows:
                 when: always
                 name: Create mochawesome html report
                 command: npx marge mochareports/*.json -f report -o mochareports
-            - run:
-                when: always
-                name: Slack report
-                command: npx cypress-slack-reporter --verbose
             - store_artifacts:
                 path: mochareports
             - store_test_results:
-                path: cypress/reports
+                path: cypress/reports/tests
           
   nightly:
     triggers: #use the triggers key to indicate a scheduled build
@@ -43,10 +39,6 @@ workflows:
                 when: always
                 name: Create mochawesome html report
                 command: npx marge mochareports/*.json -f report -o mochareports
-            - run:
-                when: always
-                name: Slack report
-                command: npx cypress-slack-reporter --verbose
             - store_artifacts:
                 path: mochareports
             - store_test_results:
