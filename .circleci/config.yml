@@ -363,38 +363,38 @@
 # #           command: npm run build
 
 
-# version: 2.1
-# orbs:
-#   cypress: cypress-io/cypress@2.2.0
-  
-# workflows:
-#     example-workflow:
-#       jobs:
-#         - cypress/install:
-#             install-command: npm install
-# #         - cypress/install:
-# #             install-command: yarn install --frozen-lockfile 
-#         - cypress/run:
-#             requires:
-#               - cypress/install
-#             record: true
-#             parallel: true
-#             parallelism: 1
-
-
-
-
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.0.0
+  cypress: cypress-io/cypress@2.2.0
+  
 workflows:
-  example-workflow:
-    jobs:
-      - cypress/install:
-           install-command: npm install
-      - cypress/run:
-#             requires:
-#               - cypress/install
-           record: true
-           parallel: true
-           parallelism: 2
+    example-workflow:
+      jobs:
+        - cypress/install:
+            install-command: npm install
+#         - cypress/install:
+#             install-command: yarn install --frozen-lockfile 
+        - cypress/run:
+            requires:
+              - cypress/install
+            record: true
+            parallel: true
+            parallelism: 1
+
+
+
+
+# version: 2.1
+# orbs:
+#   cypress: cypress-io/cypress@1.0.0
+# workflows:
+#   example-workflow:
+#     jobs:
+#       - cypress/install:
+#            install-command: npm install
+#       - cypress/run:
+# #             requires:
+# #               - cypress/install
+#            record: true
+#            parallel: true
+#            parallelism: 2
