@@ -345,7 +345,7 @@ jobs:
           ## this enables colors in the output 
           TERM: xterm
 #     working_directory: ~/app
-    working_directory: ~/project/InterviewFrontendTest
+    working_directory: /InterviewFrontendTest
     parallelism: 1
     steps:
       - checkout
@@ -358,6 +358,6 @@ jobs:
       - run:
           name: Running E2E tests
 #           command: npx cypress run
-          app-dir: ~/project/backend
+          app-dir: /InterviewFrontendTest
           cache-version: v1
           command: npm run build
