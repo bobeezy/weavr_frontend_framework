@@ -370,7 +370,9 @@ orbs:
 workflows:
     example-workflow:
       jobs:
-        - cypress/install
+        - cypress/install:
+            install-command: yarn install --frozen-lockfile
+            install-command: npm install
         - cypress/run:
             requires:
               - cypress/install
