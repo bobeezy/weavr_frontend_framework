@@ -393,8 +393,8 @@ workflows:
       - cypress/install:
            install-command: npm install
       - cypress/run:
-            requires:
-              - cypress/install
+#             requires:
+#               - cypress/install
            record: true
            parallel: true
            parallelism: 2
