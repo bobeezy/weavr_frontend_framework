@@ -380,3 +380,21 @@ workflows:
             record: true
             parallel: true
             parallelism: 1
+
+
+
+
+# version: 2.1
+# orbs:
+#   cypress: cypress-io/cypress@1.0.0
+# workflows:
+#   example-workflow:
+#     jobs:
+#       - cypress/install:
+#            install-command: npm install
+#       - cypress/run:
+# #             requires:
+# #               - cypress/install
+#            record: true
+#            parallel: true
+#            parallelism: 2
